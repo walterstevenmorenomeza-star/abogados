@@ -1,0 +1,226 @@
+/* xd.css — versión corregida y optimizada para desplegar servicios */
+/* Mantiene tu paleta beige / marrón; corrige comportamiento de .servicio/.contenido */
+
+/* RESET + BOX SIZING */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(135deg, #d9c59a 0%, #8b5e3c 100%);
+  color: #3e2f23;
+  overflow-x: hidden;
+}
+
+/* VARIABLES */
+:root{
+  --bg-light: #fffaf4;
+  --accent: #c9a77f;
+  --brown: #5a3825;
+  --brown-dark: #3e2f23;
+  --border: rgba(200,180,150,0.6);
+  --shadow: 0 10px 30px rgba(0,0,0,0.12);
+}
+
+/* HEADER / HERO */
+.caja-inicial{
+  width: 100%;
+  min-height: 48vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: url('abogado 1.jpeg') center center / cover no-repeat;
+  overflow: hidden;
+}
+.caja-inicial .overlay{
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(50,35,20,0.55), rgba(50,35,20,0.35));
+}
+.texto-inicio{ position: relative; z-index: 2; text-align: center; padding: 18px; color: #fff; }
+.texto-inicio h1{ font-family: "Playfair Display", serif; font-size: 2.4rem; margin: 0; letter-spacing: 1.6px; text-shadow: 0 6px 18px rgba(0,0,0,0.35); }
+.texto-inicio h2{ margin: 8px 0 0; font-weight: 300; font-size: 1rem; opacity: 0.95; }
+
+/* PERFIL solapado (overlap) */
+.perfil-overlap{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  z-index: 60;
+  margin-top: -90px; /* ajusta si necesitas menos/más solapamiento */
+  pointer-events: none;
+}
+.perfil-overlap__img {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 6px solid var(--bg-light);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.22);
+  background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.9));
+  pointer-events: auto;
+  transition: transform .25s ease;
+}
+.perfil-overlap__img:hover { transform: scale(1.03); }
+
+/* MAIN / CONTENEDOR */
+.page { width: 100%; display: flex; justify-content: center; padding: 28px 18px; }
+.container { width: 100%; max-width: 1100px; margin: 0 auto; }
+
+/* SECCIONES */
+section { background: var(--bg-light); padding: 28px; border-radius: 12px; box-shadow: 0 8px 22px rgba(0,0,0,0.06); margin-bottom: 28px; }
+.caja-presentacion h1, .sobre-mi h1, .servicios h1, .caja-pasos h1, .caja-tarifas h1, .caja-beneficios h1 {
+  margin-top: 0;
+  color: var(--brown);
+  font-family: "Playfair Display", serif;
+}
+
+/* SOBRE MI: texto centrado bajo la foto */
+.sobre-mi .perfil { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+.sobre-mi p { max-width: 900px; text-align: center; color: #3e2f23; line-height: 1.6; }
+
+/* GRID SERVICIOS */
+.grid-servicios { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-top: 18px; }
+
+/* ---------------------------
+   TARJETA SERVICIO (mejorada)
+   --------------------------- */
+/* contenedor tarjeta */
+.servicio {
+  position: relative;
+  border-radius: 12px;
+  color: white;
+  padding: 20px;
+  min-height: 160px;
+  background-size: cover;
+  background-position: center;
+  overflow: visible; /* permitimos que el contenido se muestre correctamente */
+  box-shadow: 0 6px 20px rgba(0,0,0,0.18);
+  cursor: pointer;
+  transition: transform .30s ease, box-shadow .30s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+/* capa de oscuridad (no bloquea eventos) */
+.servicio .fondo {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  transition: background .35s ease;
+  pointer-events: none; /* importante: permite click/hover en la tarjeta */
+}
+
+/* título visible siempre */
+.servicio h2 {
+  position: relative;
+  z-index: 2;
+  margin: 0 0 8px;
+  font-size: 1.05rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* contenido oculto por defecto: controlamos con max-height + opacity */
+.servicio .contenido {
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
+  max-height: 0;              /* cerrado inicialmente */
+  opacity: 0;
+  transition: max-height .45s ease, opacity .25s ease;
+  margin-top: 0;
+  padding-top: 0;
+}
+
+/* cuando está activo, se aplica clase .activa (JS pone scrollHeight/none) */
+.servicio.activa {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 14px 36px rgba(0,0,0,0.28);
+}
+.servicio.activa .fondo { background: rgba(0,0,0,0.72); }
+.servicio.activa .contenido {
+  opacity: 1;
+  /* fallback: si JS no ejecuta, mostramos hasta 400px por CSS */
+  max-height: 400px;
+  margin-top: 10px;
+  padding-top: 8px;
+}
+
+/* lista dentro del contenido */
+.servicio .contenido ul { margin: 8px 0 0 18px; color: #fff; }
+
+/* focus accesible */
+.servicio:focus {
+  outline: 3px solid rgba(201,167,127,0.18);
+  outline-offset: 6px;
+}
+
+/* hover mejora visual (solo en dispositivos con hover) */
+@media (hover: hover) {
+  .servicio:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(0,0,0,0.22); }
+}
+
+/* BOTON CITA */
+.boton-cita { text-align: center; margin: 20px 0 40px; }
+.btn {
+  display: inline-block;
+  background: linear-gradient(180deg,#8b5e3c,#6f4528);
+  color: #fff; padding: 14px 36px; border-radius: 28px; text-decoration: none; font-weight: 700;
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.btn:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(111,69,40,0.18); }
+
+/* FOOTER */
+footer { width: 100%; background: var(--brown-dark); color: #fff; padding: 26px 12px; margin-top: 36px; box-sizing: border-box; }
+.footer-inner { max-width: 1100px; margin: 0 auto; text-align: center; font-size: .95rem; }
+
+/* RESPONSIVE */
+@media (max-width: 992px) {
+  .texto-inicio h1{ font-size: 2rem; }
+  .texto-inicio h2{ font-size: .98rem; }
+  .perfil-overlap { margin-top: -70px; }
+}
+@media (max-width: 760px) {
+  .caja-inicial { min-height: 36vh; background-position: center top; }
+  .texto-inicio h1 { font-size: 1.6rem; }
+  .perfil-overlap { margin-top: -60px; }
+  .perfil-overlap__img { width: 140px; height: 140px; border-width: 5px; }
+  .page { padding: 18px 10px; }
+  .grid-servicios { gap: 14px; }
+  section { padding: 20px; border-radius: 10px; }
+  .btn { padding: 12px 28px; }
+  /* en móvil, el hover no aplica; la interacción será por click/tap */
+  .servicio .contenido { transition: max-height .45s ease, opacity .25s ease; }
+}
+@media (max-width: 420px) {
+  .texto-inicio h1 { font-size: 1.4rem; }
+  .texto-inicio h2 { display: none; }
+  .perfil-overlap__img { width: 120px; height: 120px; }
+  .formulario, section { padding: 16px; }
+}
+/* La capa oscura no debe bloquear eventos */
+.servicio .fondo { pointer-events: none; }
+
+/* Contenedor debe permitir overflow visible para que el contenido desplegado no se corte */
+.servicio { overflow: visible; }
+
+/* Contenido oculto por defecto y con transición */
+.servicio .contenido {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 420ms ease, opacity 220ms ease;
+  display: block; /* importante: display block para medir scrollHeight */
+}
+
+/* Cuando JS pone .activa, .contenido se mostrará (JS ajusta max-height) */
+.servicio.activa .contenido { opacity: 1; }

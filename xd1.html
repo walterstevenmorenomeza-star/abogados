@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Agendar cita</title>
+  <link rel="icon" href="imagen 1.jpeg" type="image/png">
+  <link rel="stylesheet" href="xd1.css">
+</head>
+<body>
+  <header>
+    <!-- CABECERA (imagen full-width) -->
+    <div class="caja-inicial" role="banner" aria-label="Cabecera">
+      <div class="overlay"></div>
+      <div class="texto-inicio">
+        <h1>Tu estudio jurídico</h1>
+        <h2>Asesoría profesional y confiable</h2>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTENIDO PRINCIPAL: centrado en la página -->
+  <main class="page">
+    <div class="container">
+      <section class="formulario" aria-labelledby="titulo-form">
+        <h1 id="titulo-form">Agenda tu cita</h1>
+        <hr>
+
+        <form id="formularioCita" novalidate>
+          <label for="nombres">Nombres</label>
+          <input type="text" id="nombres" name="nombres" placeholder="" required>
+
+          <label for="apellidos">Apellidos</label>
+          <input type="text" id="apellidos" name="apellidos" placeholder="" required>
+
+          <label for="correo">Correo</label>
+          <input type="email" id="correo" name="correo" placeholder="correo@ejem.com" required>
+
+          <label for="telefono">Teléfono</label>
+          <input type="tel" id="telefono" name="telefono" placeholder="+57 1234567890" required>
+
+          <label for="fecha">Fecha</label>
+          <input type="date" id="fecha" name="fecha" required>
+
+          <label for="hora">Hora</label>
+          <input type="time" id="hora" name="hora" required>
+
+          <label for="horario">Horario (AM / PM)</label>
+          <input type="text" id="horario" name="horario" placeholder="am o pm" required>
+
+          <div class="botones">
+            <input type="submit" value="Enviar">
+            <input type="reset" value="Borrar">
+          </div>
+        </form>
+
+        <a href="index.html" class="btn-volver">Volver a la página principal</a>
+      </section>
+    </div>
+  </main>
+
+  <!-- FOOTER full-width -->
+  <footer>
+    <div class="footer-inner">
+      © <span id="year"></span> Tu estudio jurídico · Todos los derechos reservados
+    </div>
+  </footer>
+
+  <script>
+    // año dinámico
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+
+  <!-- tu script de envío a SheetBest (no lo toco) -->
+  <script src="revisar.js"></script>
+</body>
+</html>
